@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+</head>
+<body>
+{% if clicked_post.published_date %}
+    <div>{{ clicked_post.published_date }}</div>
+{% endif %}
+<h1>{{ clicked_post.title }}</h1>
+<p>{{ clicked_post.text|linebreaksbr }}</p>
+
+</body>
+</html>
