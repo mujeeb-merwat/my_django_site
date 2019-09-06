@@ -7,6 +7,10 @@
                 {{ clicked_post.published_date }}
             </div>
         {% endif %}
+
+        <a href="{% url 'post_edit' pk=clicked_post.pk %}"><i class="far fa-edit fa-2x" style="color: #339af0"></i></a>
+
+
         <h1>{{ clicked_post.title }}</h1>
         <p>{{ clicked_post.text|linebreaksbr }}</p>
 </div>
