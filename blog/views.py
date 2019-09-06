@@ -16,8 +16,8 @@ def post_list(request):
 
 
 def post_detail(request, pk):
-    clicked_post = get_object_or_404(Post, pk=pk)
-    stuff_for_frontend = {'clicked_post': clicked_post}
+    post = get_object_or_404(Post, pk=pk)
+    stuff_for_frontend = {'post': post}
     return render(request, 'blog/post_detail.html', stuff_for_frontend)
 
 
@@ -27,7 +27,6 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
@@ -43,7 +42,6 @@ def post_edit(request, pk):
         if form.is_valid():
             post = form.save()
             post.author = request.user
-            post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk)
 
@@ -51,3 +49,15 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
         stuff_for_frontend = {'form': form}
         return render(request, 'blog/post_edit.html', stuff_for_frontend)
+
+
+def unpublished_posts(request):
+    posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+    stuff_for_frontend = {'posts': posts}
+    return render(request, 'blog/unpublished_posts.html', stuff_for_frontend)
+
+
+def post_publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=pk)
