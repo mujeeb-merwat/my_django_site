@@ -44,5 +44,6 @@ h1, h2, h3, h4 {
 .page-header .top-menu{
     color: ffffff;
     float: right;
-    margin-right: 40px;
+    margin-right: 20px;
+    font-size: 20pt;
 }
