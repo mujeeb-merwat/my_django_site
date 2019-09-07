@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Blog App</title>
+    <title>{% block title %}{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat|Open+Sans&display=swap" rel="stylesheet" type="text/css">
     <!--<link href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans" rel="stylesheet" type="text/css"-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -15,6 +15,8 @@
     {% if user.is_authenticated %}
         <a href="{% url 'unpublished_posts' %}" class="top-menu"><i class="fas fa-cloud fa-3x"></i></a>
         <a href="{% url 'post_new' %}" class="top-menu" ><i class="fas fa-plus fa-3x"></i></a>
+    {% else %}
+        <a href="{% url 'login' %}" class="top-menu"><i class="fas fa-sign-in-alt fa-3x"></i></a>
     {% endif %}
     <h1><a href="{% url 'post_list' %}">Blog list</a></h1>
 </div>
