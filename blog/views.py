@@ -72,7 +72,7 @@ def add_comment_to_post(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.author = request.user #post.author
+            comment.author = request.user  # post.author
             comment.post = post
             comment.save()
             return redirect('post_detail', pk)
@@ -81,3 +81,10 @@ def add_comment_to_post(request, pk):
         form = CommentForm()
         stuff_for_frontend = {'form': form}
         return render(request, 'blog/add_comment_to_post.html', stuff_for_frontend)
+
+
+def remove_comment(request, pk):
+    print(pk)
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('post_detail', pk=comment.post.pk)

@@ -30,10 +30,11 @@
             </div>
 
             <strong>{{ comment.author }}</strong>
+            <a href="{% url 'remove_comment' pk=comment.pk %}"><i class="fas fa-times" style="color: gray;"></i></a>
             <p>{{ comment.text }}</p>
         </div>
 
         {% empty %}
-        <p>No Comment yet...</p>
+        <p>No comment yet...</p>
     {% endfor %}
 {% endblock %}
