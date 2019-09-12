@@ -24,9 +24,15 @@
             </a>
         {% endif %}
 
+        <div>
+            <br>
+            <div>
+                <img class="rounded-circle account-img" src={{ user.profile.image.url }} width=105px height=100px; >
+            </div>
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.text | markdown | safe }}</p>
+        </div>
 
-        <h1>{{ post.title }}</h1>
-        <p>{{ post.text | markdown | safe }}</p>
     </div>
 
     <hr>
@@ -38,6 +44,10 @@
                     <a href="{% url 'approve_comment' pk=comment.pk %}"><i class="fas fa-check" style="color: gray"></i></a>
                     <a href="{% url 'remove_comment' pk=comment.pk %}"><i class="fas fa-times" style="color: gray"></i></a>
                 {% endif %}
+                <div>
+                    <br>
+                    <img class="rounded-circle account-img" src={{ user.profile.image.url }} width=75px height=70px; >
+                </div>
                 <div class="date">
                     {{ comment.created_date }}
                 </div>

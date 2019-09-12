@@ -2,39 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--from-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--to-->
     <title>{% block title %}{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat|Open+Sans&display=swap" rel="stylesheet" type="text/css">
-    <!--<link href="https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic|Inconsolata:italic|Droid+Sans" rel="stylesheet" type="text/css"-->
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog_css.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
     <link rel="stylesheet" href="{% static 'css/zenburn.css' %}">
 </head>
 <body>
 
-<div class="page-header">
-    {% if user.is_authenticated %}
-        <a href="{% url 'unpublished_posts' %}" class="top-menu"><i class="fas fa-cloud fa-2x"></i></a>
-        <a href="{% url 'post_new' %}" class="top-menu"><i class="fas fa-plus fa-2x"></i></a>
-        <p class="top-menu">Hello, {{ user.username }}<small> (<a href="{% url 'logout' %}">Logout</a>) </small></p>
-    {% else %}
-        <a href="{% url 'login' %}" class="top-menu"><i class="fas fa-sign-in-alt fa-2x"></i></a>
-    {% endif %}
+<!--copied from-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!--copied To-->
 
-    <h1><a href="{% url 'post_list' %}">Blog list</a></h1>
-</div>
+    <div class="page-header">
+        {% if user.is_authenticated %}
+            <a href="{% url 'unpublished_posts' %}" class="top-menu"><i class="fas fa-cloud fa-2x"></i></a>
+            <a href="{% url 'post_new' %}" class="top-menu"><i class="fas fa-plus fa-2x"></i></a>
+        <p class="top-menu">Hello, <a href="{% url 'profile' user.pk %}" >{{user.username }} </a><small>(<a href="{% url 'logout' %}">Logout</a>) </small></p>
+        {% else %}
+            <a href="{% url 'login' %}" class="top-menu"><i class="fas fa-sign-in-alt fa-2x"></i></a>
+        {% endif %}
 
-<div class="content container">
-    <div class="row">
-        <div class="col-md-8">
+        <h1><a href="{% url 'post_list' %}">Blog list</a></h1>
+    </div>
 
-            {% block content %}
-            {% endblock %}
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <!--copied from-->
+            <div class="col-md-4">
+              <div class="content-section">
+                <h3>Our Sidebar</h3>
+                <p class='text-muted'>You can put any information here you'd like.
+                  <ul class="list-group">
+                    <a href="{% url 'latest_posts' %}"><li class="list-group-item list-group-item-light">Latest Posts</li></a>
+                    <a href="{% url 'announcements' %}"><li class="list-group-item list-group-item-light">Announcements</li></a>
+                    <a href="{% url 'calendar' %}"><li class="list-group-item list-group-item-light">Calendars</li></a>
+                    <a href="{% url 'etc' %}"><li class="list-group-item list-group-item-light">etc</li></a>
+                  </ul>
+                </p>
+              </div>
+            </div>
+            <!--copied To-->
         </div>
     </div>
-</div>
-
 </body>
 </html>

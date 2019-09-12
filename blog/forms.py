@@ -1,11 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Post, Comment
+from .models import Post, Comment, Profile
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Field
-from crispy_forms.bootstrap import (
-    PrependedText, PrependedAppendedText, FormActions)
+from crispy_forms.layout import Submit
 
 
 class PostForm(forms.ModelForm):
@@ -29,3 +27,15 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email',)
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('image',)

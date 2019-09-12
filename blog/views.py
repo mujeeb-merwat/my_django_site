@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
-from .forms import PostForm, CommentForm, UserForm
-from .models import Post, Comment
+from .forms import PostForm, CommentForm, UserForm, UserUpdateForm, ProfileUpdateForm
+from .models import Post, Comment, Profile
 
 
 # Create your views here.
@@ -13,6 +13,12 @@ from .models import Post, Comment
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     stuff_for_frontend = {'posts': posts}
+    return render(request, 'blog/post_list.html', stuff_for_frontend)
+
+
+def latest_posts(request):
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    stuff_for_frontend = {'posts': posts[:5]}
     return render(request, 'blog/post_list.html', stuff_for_frontend)
 
 
@@ -67,6 +73,7 @@ def post_publish(request, pk):
     post.publish()
     return redirect('post_detail', pk=pk)
 
+
 @login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -91,6 +98,7 @@ def add_comment_to_post(request, pk):
         stuff_for_frontend = {'form': form}
         return render(request, 'blog/add_comment_to_post.html', stuff_for_frontend)
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -102,7 +110,7 @@ def signup(request):
     else:
         form = UserForm()
         stuff_for_frontend = {'form': form}
-        return render(request, 'blog/signup.html', stuff_for_frontend)
+        return render(request, 'registration/signup.html', stuff_for_frontend)
 
 
 @login_required
@@ -117,3 +125,21 @@ def approve_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.approve()
     return redirect('post_detail', pk=comment.post.pk)
+
+
+def show_profile(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    stuff_for_frontend = {'user': user}
+    return render(request, 'blog/profile.html', stuff_for_frontend)
+
+
+def announcements(request):
+    return render(request, 'blog/nothing_available_page.html',)
+
+
+def calendar(request):
+    return render(request, 'blog/nothing_available_page.html',)
+
+
+def etc(request):
+    return render(request, 'blog/nothing_available_page.html',)
